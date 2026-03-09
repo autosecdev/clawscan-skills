@@ -1,6 +1,9 @@
 ---
 name: clawscan
 description: perform first-pass security checks for openclaw deployments by registering the client, checking whether the installed clawscan package is outdated, checking whether the current openclaw version matches known vulnerable versions, checking whether installed skills match known malicious hashes, and checking whether openclaw or related services are listening on 0.0.0.0 or other non-local interfaces. use this skill when a user asks to assess whether openclaw is safe, run a clawscan check, verify openclaw version risk, verify skills hashes, or review listening ports and exposure risk.
+homepage: https://github.com/autosecdev/clawscan-skills
+user-invocable: true
+metadata: {"openclaw.requires.bins":["python3"],"openclaw.requires.anyBins":["ss","lsof"],"openclaw.os":["darwin","linux"]}
 ---
 
 # Clawscan
@@ -93,7 +96,7 @@ Default skill locations to inspect if they exist:
 - `~/.openclaw/skills`
 - project or workspace-local `./skills`
 
-Use `scripts/collect_skill_hashes.py` to produce normalized JSON.
+Use `{baseDir}/scripts/collect_skill_hashes.py` to produce normalized JSON.
 
 Submit only:
 
@@ -105,7 +108,7 @@ Avoid sending absolute paths unless the service explicitly requires them.
 
 #### For `port-check`
 
-Collect listening TCP sockets and process names with `scripts/list_listeners.py`.
+Collect listening TCP sockets and process names with `{baseDir}/scripts/list_listeners.py`.
 
 Focus the risk explanation on:
 
@@ -117,7 +120,7 @@ Do **not** claim that `0.0.0.0` always means public internet exposure. Explain t
 
 ### 3) Call the ClawScan API
 
-Use the endpoint shape documented in `references/api-contract.md`.
+Use the endpoint shape documented in `{baseDir}/references/api-contract.md`.
 
 Preferred route layout:
 
@@ -276,6 +279,6 @@ ClawScan scheduled scan enabled.
 
 ## Bundled resources
 
-- `scripts/collect_skill_hashes.py`: recursively compute SHA-256 for installed skills and emit normalized JSON payload fragments
-- `scripts/list_listeners.py`: normalize listening TCP socket information from `ss` or `lsof`
-- `references/api-contract.md`: request and response shapes for the first ClawScan service version
+- `{baseDir}/scripts/collect_skill_hashes.py`: recursively compute SHA-256 for installed skills and emit normalized JSON payload fragments
+- `{baseDir}/scripts/list_listeners.py`: normalize listening TCP socket information from `ss` or `lsof`
+- `{baseDir}/references/api-contract.md`: request and response shapes for the first ClawScan service version
